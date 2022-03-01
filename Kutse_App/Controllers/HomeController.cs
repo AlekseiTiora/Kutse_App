@@ -12,9 +12,33 @@ namespace Kutse_App.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Ootan sind oma peole! Palun tule kindlasti";
+            string pidu = "";
+            if(DateTime.Now.Month==1){pidu = "Jaanuari pidu";}
+            else if (DateTime.Now.Month == 2){pidu = "Baarmeni päev pidu"; }
+            else if (DateTime.Now.Month == 3){pidu = "naistepäev pidu"; }
+            else if (DateTime.Now.Month == 4){pidu = "aprillinali pidu"; }
+            else if (DateTime.Now.Month == 5){pidu = "Võidupüha pidu"; }
+            else if (DateTime.Now.Month == 6){pidu = "Lastekaitsepäev"; }
+            else if (DateTime.Now.Month == 7){pidu = "Jaanuari pidu";}
+            else if (DateTime.Now.Month == 8){pidu = "Jaanuari pidu";}
+            else if (DateTime.Now.Month == 9){pidu = "Jaanuari pidu";}
+            else if (DateTime.Now.Month == 10){pidu = "Jaanuari pidu";}
+            else if (DateTime.Now.Month == 11){pidu = "Jaanuari pidu";}
+            else if (DateTime.Now.Month == 12){pidu = "Jaanuari pidu";}
+
+
+            ViewBag.Message = "Ootan sind oma peole! "+pidu+" Palun tule kindlasti!";
+
             int hour = DateTime.Now.Hour;
-            ViewBag.Greeting = hour < 12 ? "Tere hommikust":"Tere päevast";
+            if (hour <= 16)
+            {
+               ViewBag.Greeting = hour < 10 ? "Tere hommikust":"Tere päevast"; 
+            }
+            else if(hour > 16)
+            {
+                ViewBag.Greeting = hour < 20 ? "Tere õhtu" : "Tere päevast";
+            }
+
             return View();
         }
         [HttpGet]
