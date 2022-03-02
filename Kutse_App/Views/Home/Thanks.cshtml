@@ -10,11 +10,17 @@
     @if (Model.WillAttend == true)
     {
         @: Mul on väga hea meel, et tulet
-        <img src="~/Images/vesel.png" />
+        <p>
+            <br>
+            <img src="~/Images/vesel.png" />
+            <br>
+            @Html.ActionLink("Meeldetuletus", "Thanks", "Thanks", new { @class = "btn btn-primary" })
+        </p>
     }
     else
     {
         @:Kahju, et ei saa tulla
+        <br>
         <img src="~/Images/grust.png" />
     }
 </div>

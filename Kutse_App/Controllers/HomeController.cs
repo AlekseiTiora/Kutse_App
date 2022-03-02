@@ -1,6 +1,7 @@
 ﻿using Kutse_App.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Helpers;
@@ -19,12 +20,12 @@ namespace Kutse_App.Controllers
             else if (DateTime.Now.Month == 4){pidu = "aprillinali pidu"; }
             else if (DateTime.Now.Month == 5){pidu = "Võidupüha pidu"; }
             else if (DateTime.Now.Month == 6){pidu = "Lastekaitsepäev"; }
-            else if (DateTime.Now.Month == 7){pidu = "Jaanuari pidu";}
-            else if (DateTime.Now.Month == 8){pidu = "Jaanuari pidu";}
-            else if (DateTime.Now.Month == 9){pidu = "Jaanuari pidu";}
-            else if (DateTime.Now.Month == 10){pidu = "Jaanuari pidu";}
-            else if (DateTime.Now.Month == 11){pidu = "Jaanuari pidu";}
-            else if (DateTime.Now.Month == 12){pidu = "Jaanuari pidu";}
+            else if (DateTime.Now.Month == 7){pidu = "Spordiajakirjaniku päev"; }
+            else if (DateTime.Now.Month == 8){pidu = "arbuusipäev"; }
+            else if (DateTime.Now.Month == 9){pidu = "Teadmiste päev"; }
+            else if (DateTime.Now.Month == 10){pidu = "Ülemaailmne loomade päev";}
+            else if (DateTime.Now.Month == 11){pidu = "Ennustamispäev kohvipaksu peal"; }
+            else if (DateTime.Now.Month == 12){pidu = "vanaaasta õhtu"; }
 
 
             ViewBag.Message = "Ootan sind oma peole! "+pidu+" Palun tule kindlasti!";
@@ -52,6 +53,7 @@ namespace Kutse_App.Controllers
             E_mail(guest);
             if(ModelState.IsValid)
             {
+                ViewBag.Greeting = guest.Email;
                 return View("Thanks", guest);
             }
             else
@@ -69,8 +71,10 @@ namespace Kutse_App.Controllers
                 WebMail.UserName = "programmeeriminetthk2@gmail.com";
                 WebMail.Password = "2.kuursus tarpv20";
                 WebMail.From = "programmeeriminetthk2@gmail.com";
-                WebMail.Send("aleksei.tiora@gmail.com", "Vastus kutsele ", guest.Name + "vastas" + ((guest.WillAttend ?? false) ? " tuleb peole " : " ei tule peole "));
-                ViewBag.Message = "Kiri on saatnud";
+                WebMail.Send(guest.Email, "Vastus kutsele ", guest.Name + " vastas" + ((guest.WillAttend ?? false) ? " tuleb peole: " : " ei tule peole "));
+                WebMail.Send(guest.Email, "Meeldetuletus", guest.Name + ", ara unusta. Pidu toimub 12.03.22! Sind ootavad väga!",
+                    null, "aleksei.tiora@gmail.com"); 
+                 ViewBag.Message = "Kiri on saatnud";
 
             }
             catch(Exception)
